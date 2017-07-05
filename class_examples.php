@@ -19,5 +19,6 @@ $simpleClassInstance = new SimpleClass();
 // echo($simpleClassInstance->var);
 echo $simpleClassInstance->displayVar();
  
+ 
 
 ?>
