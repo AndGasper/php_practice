@@ -36,6 +36,22 @@ function registerClient() {
     registerRequest.onload = function() {
         console.log(`Ready state AFTER the 'transaction' of a request: ${registerRequest.readyState}`); 
         // Output - Ready state AFTER the 'transaction' of a request: 4
+        // Notice that the response is logged before the ready state. Why? Because the *change* in ready state is considered to happen BEFORE# 
+        // the request operation is considered complete.
+        /**
+         * -Footnote-
+         * # -  Here's an analogy: You're standing at the finish line of a race, and your job is to watch for runners who cross the finish line
+         *      then mark him/her down as "COMPLETED". 
+         * 
+         *      You watch as the first runner crosses the finish line, and you begin to reach for your race log.
+         *      BEFORE you write down who completed the race, you would agree that regardless of you recording it,
+         *      the race's state has definitively changed. Thus, the order is clear: OBSERVATIONS occur BEFORE RECORDING. 
+         *      Thus, the physical interpretation of a console log for onreadystatechange printing BEFORE onload would be you OBSERVING the race's
+         *      state change and the RECORDING/LOGGING of the state AFTER completion, onload. 
+         *      
+         *      
+         */ 
+        
     };
 
     registerRequest.onreadystatechange = function() {
