@@ -1,5 +1,9 @@
 <?php
 
+$output = [
+    'success'=>false,
+    'errors'=>[]
+];
 define('fromData', true); // get variable names from external source
 $action = $_GET['action'];
 
@@ -18,7 +22,8 @@ switch($action) {
 
 }
 
-$output = json_encode($output);
-print_r($output); 
+$outputJSON = json_encode($output);
+
+print_r($outputJSON); 
 
 ?>
