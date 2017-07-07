@@ -1,6 +1,13 @@
 const BASE_URL = "data.php?action="
 function registerClient() {
     console.log("Register client function"); 
+    const clientInformationForm = document.getElementById("new_customer_info");
+    debugger;
+    const clientData = new FormData();
+    
+    console.log("client data", clientData); 
+
+
     const registerRequest = new XMLHttpRequest(); // make a new instance; Should be ready state 0; 
     
     // Verification of XMLHttpRequest cleint's readyState(s) 
@@ -17,16 +24,6 @@ function registerClient() {
     registerRequest.send("Bleep bloop"); 
     console.log(`Ready state AFTER XMLHttpRequest.send("Bleep bloop"): ${registerRequest.readyState}`);
     // Output - Ready state AFTER XMLHttpRequest.send("Bleep bloop"): 1
-    
-    /**
-     * The Five (5) Steps to a Successful XMLHttpRequest
-     * 0. Open a request
-     * 1. Transmit the request
-     * 2. ???
-     * 3. Anticipate a response
-     * 4. Receive a response 
-     * 5. Profit!
-     */
     
     registerRequest.onprogress = function() {
         console.log(`Ready state DURING the 'transaction' of a request: ${registerRequest.readyState}`); 

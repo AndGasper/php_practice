@@ -7,6 +7,9 @@ empty($action) ? (exit('No action specified')) : (''); // Exit if no action is s
 
 // require('config/config.php'); // For mySQL credentials
 
+$output = new stdClass(); 
+$output->success=false; // Default assumption is that transactions failed unless otherwise indicated
+$output->debug=[]; // Empty object to hold debugging output
 
 switch($action) {
     case("register_client"): 
@@ -18,7 +21,7 @@ switch($action) {
 
 }
 
-$output = json_encode($output);
-print_r($output); 
+$outputJSON = json_encode($output);
+print_r($outputJSON); 
 
 ?>
