@@ -60,8 +60,111 @@ for ($z = 0; $z < 5; $z++) {
 
 }
 
-print_r($arrayOfRandomStrings[4]);
-echo count($arrayOfRandomStrings[4]);
+class PolynomialEquation {
+    /**
+    * General polynomial equation - Assume a_n is an integer value, i.e. n exists in Z
+    *
+    * f(x) = sum(min: i = 0, max: i = n) { a_(n-i) * x^(n-i) }
+    *
+    * Example: Linear, n = 1;
+    * f(x) = sum(min: i = 0, max: i = 1) { (a_(1-0) * x^(1-0) ) + ( a_(1-1) * x^(1-1) ) }
+    * f(x) = a_1*x^1 + a_0*x^0; 
+    * f(x) = a_1*x + a_0; 
+
+    * Example: Quadratic, n = 2; 
+    * f(x) = sum(min: i = 0, max: i = 2) { ( a_(2-0) * x^(2-0) ) + ( a_(2-1) * x^(2-1) ) + (a_(2-2) * x^(2-2) ) }
+    * f(x) = a_2*x^2 + a_1*x^1 + a_0*x^0; x^0 = 1;
+    * f(x) = a_2*x^2 + a_1*x + a_0;
+    */
+    
+    protected $degree = 0; // Set n = 0 by default
+    // because I couldn't figure out how to get new stdClass() to work
+    protected $coefficientValues = array(); // Example: [a_2] => 7
+    protected $variableValues = array(); 
+    protected $equationString = "f(x) = "; // start equation as empty string 
+    
+    public function setDegree($degreeValue) {
+        $this->degree = $degreeValue; // set degree equal to the passed value
+        return;
+    }
+    public function getDegree() {
+        return $this->degree;
+    }
+
+    // Two birds one stone. Might as well do the x^n terms while we're doing the a_n terms
+    // Though the name could use some work...little long
+    public function setArrayValuessForCoeffiecientsAndVariables() {
+        $polynomialDegree = $this->degree; // Access the degree property and assign it to a local variable; n part of equation    
+        while ($polynomialDegree > -1) {
+            $this->coefficientValues["a_$polynomialDegree"] = mt_rand(0,10); // For now, I set the coefficient terms to some value between 0 and 10
+            $this->variableValues[$polynomialDegree] = "x^$polynomialDegree";
+            $polynomialDegree--;
+        }
+        // Lazy way of setting x^0 = 1 without adding a ternary to the expression 
+        $this->variableValues["0"] = 1;  // "0", just to be  clear: I am referring to the key "0" not the index 0;
+        return;
+    }
+
+    public function getCoefficientValues() {
+        return $this->coefficientValues; 
+    }
+    
+    // I don't like the phrase "variable values," but I can't think of a better way to refer to the
+    // exponential terms, at the moment
+    public function getVariableValues() {
+        return $this->variableValues; 
+    }
+
+    public function setEquation() {
+        $degreeValue = $this->degree; 
+        
+        while ($degreeValue > 0) {
+            // echo $this->coefficientValues["a_$degreeValue"];
+            // echo $this->variableValues[$degreeValue];
+            $this->equationString .= "{$this->coefficientValues["a_$degreeValue"]}*{$this->variableValues[$degreeValue]} + ";
+            $degreeValue--;
+        }
+        // $this->equationString .= "{$this->coefficientValues['a_0']}*{$this->variableValues['0']}";
+        $this->equationString .= "{$this->coefficientValues['a_0']}"; // Append the final coefficient value
+        return;
+    }
+
+    public function printEquation() {
+        return $this->equationString;
+    }
+}
+
+
+// setDegree method is kind of cumbersome, should consider switching to __construct route
+$constantValue = new PolynomialEquation(); 
+// echo $constantValue->getDegree();
+
+$linearEquation = new PolynomialEquation();
+$linearEquation->setDegree(1); 
+$linearEquation->setArrayValuessForCoeffiecientsAndVariables();
+print_r($linearEquation->getCoefficientValues());
+echo "<br/>";
+print_r($linearEquation->getVariableValues());
+echo "<br/>";
+$linearEquation->setEquation();
+echo "<br/>";
+echo $linearEquation->printEquation();
+echo "<br/>";
+
+$quadraticEquation = new PolynomialEquation(); 
+$quadraticEquation->setDegree(2); 
+$quadraticEquation->setArrayValuessForCoeffiecientsAndVariables();
+print_r($quadraticEquation->getCoefficientValues());
+echo "<br/>";
+print_r($quadraticEquation->getVariableValues());
+echo "<br/>";
+$quadraticEquation->setEquation(); 
+echo $quadraticEquation->printEquation();
+
+
+
+// print_r($arrayOfRandomStrings[4]);
+// echo count($arrayOfRandomStrings[4]);
 
 
 
